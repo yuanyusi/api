@@ -75,8 +75,6 @@ public class SpringMVCRESTFulController {
             
 			Long id = Long.parseLong(name);
 			Goal goal = this.repository.findOne(id);
-			List<Goal> lGoal = new ArrayList<Goal>();
-			lGoal.add(goal);
 			
 			ArrayList<Date> successes = goal.getSuccesses();
 			successes.add(new Date()); 
@@ -90,22 +88,20 @@ public class SpringMVCRESTFulController {
 	}
 	
 	@RequestMapping(value = "/api/goals/failures/{name}",  method=RequestMethod.PUT, produces={"application/json"})
-	public @ResponseBody List<Goal> populateFailuresPUT(@PathVariable String name) {		
+	public @ResponseBody Goal populateFailuresPUT(@PathVariable String name) {		
 		
 		if (name.equalsIgnoreCase("JavaHonk")) {
 			return null;
 		}else {
 			Long id = Long.parseLong(name);
 			Goal goal = this.repository.findOne(id);
-			List<Goal> lGoal = new ArrayList<Goal>();
-			lGoal.add(goal);
 			
 			ArrayList<Date> failures = goal.getFailures();
 			failures.add(new Date()); 
 			
 			goal.setFailures(failures);
 			this.repository.save(goal);
-			return lGoal;
+			return goal;
 		}
 		
 	}
